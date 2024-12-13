@@ -180,3 +180,39 @@
    z-index: 10;
    background-color: #42a5f5;
   }
+
+  .swipe-box.swiped-left {
+    transform: translateX(-100px); /* Adjust based on how much you want to swipe */
+  }
+
+  /* Initially hide the delete button */
+.edit-button,
+.delete-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  opacity: 0; /* Make the button invisible */
+  transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+/* Show the button when hovering over the swipe-box */
+.swipe-box:hover .edit-button,
+.swipe-box:hover .delete-button {
+  opacity: 1; /* Make the button visible */
+}
+
+.edit-button {
+  right: 60px; /* Move it left of the delete button */
+  background-color: blue; /* Different background for Edit */
+}
+.edit-button:hover {
+  background-color: darkblue;
+}
+.delete-button:hover {
+  background-color: darkred;
+}

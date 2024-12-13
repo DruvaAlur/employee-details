@@ -1,0 +1,14 @@
+{
+    "name": "EmployeeDB",
+    "version": 1,
+    "objectStoresMeta": [
+      {
+        "store": "employees",
+        "storeConfig": { "keyPath": "id", "autoIncrement": true },
+        "storeSchema": [
+          { "name": "name", "keypath": "name", "options": { "unique": false } },
+          { "name": "position", "keypath": "position", "options": { "unique": false } }
+        ]
+      }
+    ]
+}

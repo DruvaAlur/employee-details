@@ -1,129 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Employee } from '../components/shared-components/models/Employee';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IndexeddbService {
+  constructor(private dbService: NgxIndexedDBService) {}
 
-  private dbName = 'myDatabase';
-  private storeName = 'myObjectStore';
-  private db: IDBDatabase | null = null;
+  allEmployees:BehaviorSubject<[]>=new BehaviorSubject([])
 
-  constructor() {
-    this.openDatabase();
+  setAllEmployees(employees:any){
+    this.allEmployees.next(employees)
   }
 
-  // Open the IndexedDB database
-  openDatabase(): void {
-    const request = indexedDB.open(this.dbName, 1);
-
-    request.onupgradeneeded = (event) => {
-      const db = (event.target as IDBRequest).result;
-      if (!db.objectStoreNames.contains(this.storeName)) {
-        db.createObjectStore(this.storeName, { keyPath: 'id', autoIncrement: true });
-      }
-    };
-
-    request.onsuccess = (event) => {
-      this.db = (event.target as IDBRequest).result;
-      console.log('Database opened successfully');
-    };
-
-    request.onerror = (event) => {
-      console.error('Database error: ', (event.target as IDBRequest).error);
-    };
+  addEmployee(employee: Partial<Employee>): Observable<any> {
+    return this.dbService.add('employees', employee);
   }
 
-  // Create or Add an item to IndexedDB
-  createItem(data: any): Observable<any> {
-    return new Observable((observer) => {
-      if (!this.db) {
-        observer.error('Database not open');
-        return;
-      }
-
-      const transaction = this.db.transaction([this.storeName], 'readwrite');
-      const store = transaction.objectStore(this.storeName);
-      const request = store.add(data);
-
-      request.onsuccess = () => {
-        observer.next(request.result);
-        observer.complete();
-      };
-
-      request.onerror = (event) => {
-        observer.error((event.target as IDBRequest).error);
-      };
-    });
+  getAllEmployees(): Observable<any[]> {
+    return this.dbService.getAll('employees');
   }
 
-  // Read items from IndexedDB
-  readItems(): Observable<any[]> {
-    return new Observable((observer) => {
-      if (!this.db) {
-        observer.error('Database not open');
-        return;
-      }
-
-      const transaction = this.db.transaction([this.storeName], 'readonly');
-      const store = transaction.objectStore(this.storeName);
-      const request = store.getAll();
-
-      request.onsuccess = () => {
-        observer.next(request.result);
-        observer.complete();
-      };
-
-      request.onerror = (event) => {
-        observer.error((event.target as IDBRequest).error);
-      };
-    });
+  getEmployeeById(id: number): Observable<any> {
+    return this.dbService.getByKey('employees', id);
   }
 
-  // Update an item in IndexedDB
-  updateItem(id: number, data: any): Observable<any> {
-    return new Observable((observer) => {
-      if (!this.db) {
-        observer.error('Database not open');
-        return;
-      }
-
-      const transaction = this.db.transaction([this.storeName], 'readwrite');
-      const store = transaction.objectStore(this.storeName);
-      const request = store.put({ id, ...data });
-
-      request.onsuccess = () => {
-        observer.next(request.result);
-        observer.complete();
-      };
-
-      request.onerror = (event) => {
-        observer.error((event.target as IDBRequest).error);
-      };
-    });
+  updateEmployee(employee:any): Observable<any> {
+    return this.dbService.update('employees', employee);  // The object must have the same ID
   }
 
-  // Delete an item from IndexedDB
-  deleteItem(id: number): Observable<void> {
-    return new Observable((observer) => {
-      if (!this.db) {
-        observer.error('Database not open');
-        return;
-      }
-
-      const transaction = this.db.transaction([this.storeName], 'readwrite');
-      const store = transaction.objectStore(this.storeName);
-      const request = store.delete(id);
-
-      request.onsuccess = () => {
-        observer.next();
-        observer.complete();
-      };
-
-      request.onerror = (event) => {
-        observer.error((event.target as IDBRequest).error);
-      };
-    });
+  deleteEmployee(id: number): Observable<any> {
+    return this.dbService.delete('employees', id);
   }
+  
 }

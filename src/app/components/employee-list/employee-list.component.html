@@ -6,10 +6,85 @@
     </div>
 
     <section class="card-container">
-        <ng-container>
+        <ng-container *ngIf="employee() as employees_list">
+            @if (employees_list && employees_list.length) {
+            @if(currentEmployees().length > 0) {
+            <h4 class="title">Current Employees</h4>
+            <mat-card appearance="outlined">
+                <mat-card-content class="no-padding card-oveflow-hidden">
+                    <!-- (cdkDragMoved)="onSwipe($event, i)"
+                            (cdkDragEnded)="onSwipeEnd(i)" -->
+                    @for (employee of currentEmployees(); track employee.id; let i = $index) {
+                    <div class="flex-vertical swipe-box" (touchstart)="onTouchStart($event)"
+                        (touchmove)="onTouchMove($event,employee)" (touchend)="onTouchEnd(employee)"
+                        [ngClass]="{'swiped-left': employee.swipeLeft}" cdkDrag>
+                        <div class="swipe-content">
+                            <p class="bold-title cursor" type="button" (click)="onEditDetails(employee)">{{
+                                employee.name }}</p>
+                            <p class="position">{{ employee.position }}</p>
+                            <p class="dates">{{ employee.fromDate | date:'d MMMM y'}} - {{ employee.toDate | date:'d
+                                MMMM y' }}</p>
+                        </div>
+                        <button mat-raised-button *ngIf="employee.swipeLeft" color="warn" class="delete-btn"
+                            type="button" (click)="deleteEmployee(employee)">
+                            <img src="../../../assets/delete.png" />
+                        </button>
+                        <button mat-raised-button color="warn" class="delete-button" type="button"
+                            (click)="deleteEmployee(employee)">
+                            <img src="../../../assets/delete.png" />
+                        </button>
+                        <button mat-raised-button color="warn" class="edit-button" type="button"
+                            (click)="onEditDetails(employee)">
+                            <img style="height: 20px;width:20px" src="../../../assets/edit.png" />
+                        </button>
+                    </div>
+                    }
+                </mat-card-content>
+            </mat-card>
+            }
+
+            @if(previousEmployees().length > 0) {
+            <h4 class="title">Previous Employees</h4>
+            <mat-card appearance="outlined">
+                <mat-card-content class="no-padding">
+                    @for (employee of previousEmployees(); track employee.id; let i = $index) {
+                    <div class="flex-vertical swipe-box" (touchstart)="onTouchStart($event)"
+                        (touchmove)="onTouchMove($event,employee)" (touchend)="onTouchEnd(employee)"
+                        [ngClass]="{'swiped-left': employee.swipeLeft}" cdkDrag>
+                        <div class="swipe-content">
+                            <p class="bold-title cursor" type="button" (click)="onEditDetails(employee)">{{
+                                employee.name }}</p>
+                            <p class="position">{{ employee.position }}</p>
+                            <p class="dates">{{ employee.fromDate | date:'d MMMM y'}} - {{ employee.toDate | date:'d
+                                MMMM y' }}</p>
+                        </div>
+                        <button mat-raised-button *ngIf="employee.swipeLeft" color="warn" class="delete-btn"
+                            type="button" (click)="deleteEmployee(employee)">
+                            <img src="../../../assets/delete.png" />
+                        </button>
+                        <button mat-raised-button color="warn" class="delete-button" type="button"
+                            (click)="deleteEmployee(employee)">
+                            <img src="../../../assets/delete.png" />
+                        </button>
+                        <button mat-raised-button color="warn" class="edit-button" type="button"
+                            (click)="onEditDetails(employee)">
+                            <img style="height: 20px;width:20px" src="../../../assets/edit.png" />
+                        </button>
+                    </div>
+                    }
+                </mat-card-content>
+            </mat-card>
+            }
+
+
+            <p class="display_in_mobile_view">
+                Swipe left to delete in mobile view
+            </p>
+            } @else {
             <div class="no_records_container">
                 <img class="img-fluid" src="../../../assets/noemployees.png" alt="No Records Found Image" />
             </div>
+            }
         </ng-container>
     </section>
 </div>

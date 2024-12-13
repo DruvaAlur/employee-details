@@ -25,17 +25,6 @@ export class BottomSheetComponent {
     'QA Tester',
     'Product Owner'
   ]
-  private readonly _positions = new BehaviorSubject<string[]>(this.samplePostions);
-  readonly positions$ = this._positions.asObservable();
-
-
-  set positions(val: string[]) {
-    this._positions.next(val);
-  }
-
-  get positions(): string[] {
-      return this._positions.getValue();
-  }
 
   posTrack = (i: number, role: string): string => role;
 

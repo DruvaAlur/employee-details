@@ -1,6 +1,6 @@
 <mat-nav-list>
     <mat-list-item (click)="selectedPos($event, role)" *ngFor="
-        let role of positions$ | async;
+        let role of samplePostions;
         trackBy: posTrack">
         <span matListItemTitle>{{ role }}</span>
     </mat-list-item>

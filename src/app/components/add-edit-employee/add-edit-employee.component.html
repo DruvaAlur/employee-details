@@ -2,8 +2,7 @@
     <section class="card-container background-full">
         <div class="form-container" novalidate>
             <mat-form-field appearance="outline" class="form-control">
-                <input matInput type="text" placeholder="Employee Name" [value]="employeeName()"
-                    (input)="onInputChange($event)" />
+                <input matInput type="text" placeholder="Employee Name" [(ngModel)]="employeeName" />
                 <span matTextPrefix>
                     <img class="img-fluid" src="../../../assets/employye.png" />
                     &nbsp;</span>
