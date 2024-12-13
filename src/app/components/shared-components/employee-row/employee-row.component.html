@@ -1,0 +1,25 @@
+<div class="flex-vertical swipe-box" (mouseover)="onMouseOver()" (touch)="istouchedtru()"
+    (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event,employee)" (touchend)="onTouchEnd(employee)"
+    [ngClass]="{'swiped-left': employee.swipeLeft}" cdkDrag>
+    <div class="swipe-content">
+        <p class="bold-title cursor" type="button" (click)="onEditDetails(employee)">{{
+            employee.name }}</p>
+        <p class="position">{{ employee.position }}</p>
+        <p class="dates">{{ employee.fromDate | date:'d MMMM y'}} - {{ employee.toDate | date:'d
+            MMMM y' }}</p>
+    </div>
+    <button mat-raised-button *ngIf="employee.swipeLeft" color="warn" class="delete-btn" type="button"
+        (click)="deleteEmployee(employee)">
+        <img src="../../../assets/delete.png" />
+    </button>
+    @if (!this.isTouchDevice()) {
+    <button mat-raised-button color="warn" class="delete-button display_in_dekstop_view" type="button"
+        (click)="deleteEmployee(employee)">
+        <img src="../../../assets/delete.png" />
+    </button>
+    <button mat-raised-button color="warn" class="edit-button display_in_dekstop_view" type="button"
+        (click)="onEditDetails(employee)">
+        <img style="height: 20px;width:20px" src="../../../assets/edit.png" />
+    </button>
+    }
+</div>

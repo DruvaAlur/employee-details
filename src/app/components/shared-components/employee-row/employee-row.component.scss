@@ -120,15 +120,15 @@
     }
   }
   
-  // @media (min-width: 992px) {
-  //     .card-container {
-  //         width: 960px;
-  //     }
-  // }
+  @media (min-width: 992px) {
+      .card-container {
+          width: 960px;
+      }
+  }
   .display_in_mobile_view {
     display: none;
   }
-  @media (max-width: 576px) {
+  @media (max-width: 1200px) {
       .container-fluid {
           @include make-container(1rem, 0);
       }
@@ -148,13 +148,33 @@
   .cursor {
     cursor: pointer;
   }
-  .delete-btn {
+//   @media (min-width: 869px) {
+//     .delete-btn {
+//         position: absolute;
+//         right: -15%;
+//         height: 100px;
+//         width: 75px;
+//         transform: translateX(-50%);
+//       }
+//   }
+
+@media (max-width: 576px) {
+    .delete-btn {
+        position: absolute;
+        height: 100px;
+        right: 0%;
+        width: 75px;
+        transform: translateX(-50%);
+      }
+}
+.delete-btn {
     position: absolute;
-    right: -30%;
+    right: -10%;
     height: 100px;
     width: 75px;
     transform: translateX(-50%);
   }
+ 
   .card-oveflow-hidden {
     // position: relative;
     overflow: hidden;
@@ -199,7 +219,6 @@
   opacity: 0; /* Make the button invisible */
   transition: opacity 0.3s ease; /* Smooth transition for opacity */
 }
-
 /* Show the button when hovering over the swipe-box */
 .swipe-box:hover .edit-button,
 .swipe-box:hover .delete-button {
@@ -215,21 +234,4 @@
 }
 .delete-button:hover {
   background-color: darkred;
-}
-
-@media (max-width: 576px) {
-  .delete-btn {
-      position: absolute;
-      height: 100px;
-      right: 0%;
-      width: 75px;
-      transform: translateX(-50%);
-    }
-}
-.delete-btn {
-  position: absolute;
-  right: -10%;
-  height: 100px;
-  width: 75px;
-  transform: translateX(-50%);
 }

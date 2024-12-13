@@ -4,12 +4,13 @@ import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IndexeddbService } from '../../indexDB/indexeddb.service';
+import { EmployeeRowComponent } from "../shared-components/employee-row/employee-row.component";
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [MatCardModule,CommonModule,
-      FormsModule,],
+  imports: [MatCardModule, CommonModule,
+    FormsModule, EmployeeRowComponent],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss'
 })
@@ -48,37 +49,9 @@ export class EmployeeListComponent {
     })
   }
 
-  onEditDetails(employee:any){
-    const {id} = employee;
-    this.router.navigate([`employee/${id}/edit`]);
-  }
-  deleteEmployee(employee:any){
-    this.dbService.deleteEmployee(employee.id).subscribe((data)=>{
-      this.dbService.setAllEmployees(data)
-    })
-  }
 
-  onTouchStart(event: TouchEvent): void {
-    this.startTouchX = event.touches[0].clientX;
-  }
 
-  onTouchMove(event: TouchEvent,employee:any): void {
-    this.currentTouchX = event.touches[0].clientX;
-    const deltaX = this.startTouchX - this.currentTouchX;
-    
-    if (deltaX > 50) {  // Swipe threshold
-      employee.swipeLeft = true;
-    } else {
-      employee.swipeLeft = false;
-    }
-  }
-
-  onTouchEnd(employee:any): void {
-    // Reset or finalize swipe
-    if (employee.swipeLeft) {
-      // employee.swipeLeft = true;
-    }
-  }
+  
 
   deleteItem(): void {
     alert('Item deleted!');
