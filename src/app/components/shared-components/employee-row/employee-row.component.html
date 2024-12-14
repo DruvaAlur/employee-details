@@ -4,8 +4,11 @@
         <p class="bold-title cursor" type="button" (click)="onEditDetails(employee)">{{
             employee.name }}</p>
         <p class="position">{{ employee.position }}</p>
-        <p class="dates">{{ employee.fromDate | date:'d MMMM y'}} - {{ employee.toDate | date:'d
-            MMMM y' }}</p>
+        <p class="dates">From {{ employee.fromDate | date:'d MMMM y'}} {{ employee.toDate==null?'':(' -
+            '+(employee.toDate
+            |
+            date:'d
+            MMMM y')) }}</p>
     </div>
     <button mat-raised-button *ngIf="employee.swipeLeft" color="warn" class="delete-btn" type="button"
         (click)="deleteEmployee(employee)">
