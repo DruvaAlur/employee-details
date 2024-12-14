@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IndexeddbService } from '../../../indexDB/indexeddb.service';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-employee-row',
   standalone: true,
@@ -16,12 +16,12 @@ export class EmployeeRowComponent {
   currentTouchX = 0;
   @Input() employee: any;
   isTouchDevice = signal(true);
+  undoStack:any[]=[]
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private dbService: IndexeddbService
-  ) {}
+  private router=inject(Router)
+  private dbService=inject(IndexeddbService)
+  private _snackBar = inject(MatSnackBar);
+
   ngOnInit() {
     this.isTouchDevice.set(
       'ontouchstart' in window || navigator.maxTouchPoints > 0
@@ -49,12 +49,28 @@ export class EmployeeRowComponent {
   }
   deleteEmployee(employee: any) {
     this.dbService.deleteEmployee(employee.id).subscribe((data) => {
+      this.undoStack.push(employee)
       this.dbService.setAllEmployees(data);
+      this.showSnakBar('deleted')
     });
   }
   onMouseOver() {
     this.isTouchDevice.set(
       'ontouchstart' in window || navigator.maxTouchPoints > 0
     );
+  }
+
+  showSnakBar(message: string) {
+    let sanckbar = this._snackBar.open(message, 'undo', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: 'multiline-snackbar',
+    })
+    sanckbar.onAction().subscribe(()=>{
+      this.dbService.addEmployee(this.undoStack.pop()).subscribe((response:any)=>{
+        this.dbService.setAllEmployees([...this.dbService.allEmployees.value,response])
+      })
+    })
   }
 }
