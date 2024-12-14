@@ -26,6 +26,12 @@ export class CommonserviceService {
     return this.pageTitle
   }
 
+  getAllEmployees(){
+    this.dbService.getAllEmployees().subscribe((response:any)=>{
+      this.dbService.setAllEmployees(response)
+    })
+  }
+
   showSnakBar(message: string) {
     let sanckbar = this._snackBar.open(message, 'undo', {
       duration: 3000,
@@ -35,7 +41,7 @@ export class CommonserviceService {
     })
     sanckbar.onAction().subscribe(()=>{
       this.dbService.addEmployee(this.undoStack.pop()).subscribe((response:any)=>{
-        this.dbService.setAllEmployees([...this.dbService.allEmployees.value,response])
+        this.getAllEmployees()
       })
     })
   }
