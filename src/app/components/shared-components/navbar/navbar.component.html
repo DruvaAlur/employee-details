@@ -1,0 +1,11 @@
+<mat-toolbar class="toolbar--style">
+    <span class="page-title">{{ commonservice.getTitle() | async }}</span>
+
+    <ng-container>
+        @if(pageTitle && pageTitle.includes('Edit')) {
+        <button mat-button class="button_icon_style" type="button" (click)="onDeleteEmployee()">
+            <img src="../../../assets/delete.png" />
+        </button>
+        }
+    </ng-container>
+</mat-toolbar>

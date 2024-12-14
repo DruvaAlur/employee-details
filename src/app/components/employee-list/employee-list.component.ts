@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IndexeddbService } from '../../indexDB/indexeddb.service';
 import { EmployeeRowComponent } from "../shared-components/employee-row/employee-row.component";
+import { CommonserviceService } from '../shared-components/services/commonservice.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -16,7 +17,7 @@ import { EmployeeRowComponent } from "../shared-components/employee-row/employee
 })
 export class EmployeeListComponent {
 
-  constructor(private router: Router,private route: ActivatedRoute, private dbService:IndexeddbService){}
+  constructor(private router: Router,private route: ActivatedRoute, private dbService:IndexeddbService,private commonservice:CommonserviceService){}
 
   employee=signal([])
   // isSwipedLeft = false;
@@ -37,6 +38,7 @@ export class EmployeeListComponent {
   }
 
   ngOnInit(){
+    this.commonservice.setTitle(this.commonservice.displayEmployeePageTitle)
     this.route.data.subscribe((data) => {
       this.dbService.setAllEmployees(data['employee'])
     });
@@ -47,15 +49,6 @@ export class EmployeeListComponent {
       }))
       this.employee.set(data);
     })
-  }
-
-
-
-  
-
-  deleteItem(): void {
-    alert('Item deleted!');
-    // Implement your delete functionality here
   }
 
 }

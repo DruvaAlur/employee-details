@@ -19,6 +19,7 @@ import { Employee } from '../shared-components/models/Employee';
 import { DBConfig, NgxIndexedDBModule, provideIndexedDb } from 'ngx-indexed-db';
 import { IndexeddbService } from '../../indexDB/indexeddb.service';
 import { Observable } from 'rxjs';
+import { CommonserviceService } from '../shared-components/services/commonservice.service';
 
 @Component({
   selector: 'app-add-edit-employee',
@@ -46,6 +47,7 @@ export class AddEditEmployeeComponent {
   private dbServices =  inject(IndexeddbService);
   private route = inject(ActivatedRoute)
   private dbService=inject(IndexeddbService)
+  private commonService=inject(CommonserviceService)
 
   employeeName = signal('');
   employeePosition = signal('');
@@ -61,15 +63,17 @@ export class AddEditEmployeeComponent {
       if(data['employee']){
         data=data['employee']
         console.log(data);
-        
+        this.commonService.setTitle(this.commonService.editEmployeePageTitle)
         this.employee=data
-        
+        this.commonService.editEmployeeId=data.id
         this.employeeName.set(data['name'])
         this.employeePosition.set(data['position'])
         this.fromDate.set(data['fromDate'])
         this.toDate.set(data['toDate'])
   
         this.editMode.set(true)
+      }else{
+        this.commonService.setTitle(this.commonService.addEmployeePageTitle)
       }
     });
   }

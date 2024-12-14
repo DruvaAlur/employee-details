@@ -66,6 +66,7 @@
     flex-direction: column;
     gap: 8px;
     align-items: self-start;
+    width: 100%;
   }
   .flex-vertical {
     display: flex;
@@ -158,22 +159,15 @@
 //       }
 //   }
 
-@media (max-width: 576px) {
+
     .delete-btn {
         position: absolute;
         height: 100px;
         right: 0%;
         width: 75px;
-        transform: translateX(-50%);
+        background: red;
+        // transform: translateX(-50%);
       }
-}
-.delete-btn {
-    position: absolute;
-    right: -10%;
-    height: 100px;
-    width: 75px;
-    transform: translateX(-50%);
-  }
  
   .card-oveflow-hidden {
     // position: relative;
@@ -220,8 +214,8 @@
   transition: opacity 0.3s ease; /* Smooth transition for opacity */
 }
 /* Show the button when hovering over the swipe-box */
-.swipe-box:hover .edit-button,
-.swipe-box:hover .delete-button {
+.flex-vertical:hover .edit-button,
+.flex-vertical:hover .delete-button {
   opacity: 1; /* Make the button visible */
 }
 
