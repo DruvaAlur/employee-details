@@ -120,6 +120,24 @@
       width: 1140px;
     }
   }
+
+  @media (max-width: 576px) {
+    .container-fluid {
+        @include make-container(1rem, 0);
+    }
+    .title {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .display_in_mobile_view {
+      display: block;
+      font-size: 16px;
+      line-height: 20px;
+      color: #949C9E;
+      font-weight: 400;
+      margin: 12px;
+    }
+}
   
   // @media (min-width: 992px) {
   //     .card-container {
@@ -128,33 +146,6 @@
   // }
   .display_in_mobile_view {
     display: none;
-  }
-  @media (max-width: 576px) {
-      .container-fluid {
-          @include make-container(1rem, 0);
-      }
-      .title {
-          padding-left: 1rem;
-          padding-right: 1rem;
-      }
-      .display_in_mobile_view {
-        display: block;
-        font-size: 16px;
-        line-height: 20px;
-        color: #949C9E;
-        font-weight: 400;
-        margin: 12px;
-      }
-  }
-  .cursor {
-    cursor: pointer;
-  }
-  .delete-btn {
-    position: absolute;
-    right: -30%;
-    height: 100px;
-    width: 75px;
-    transform: translateX(-50%);
   }
   .card-oveflow-hidden {
     // position: relative;
@@ -185,52 +176,3 @@
   .swipe-box.swiped-left {
     transform: translateX(-100px); /* Adjust based on how much you want to swipe */
   }
-
-  /* Initially hide the delete button */
-.edit-button,
-.delete-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  opacity: 0; /* Make the button invisible */
-  transition: opacity 0.3s ease; /* Smooth transition for opacity */
-}
-
-/* Show the button when hovering over the swipe-box */
-.swipe-box:hover .edit-button,
-.swipe-box:hover .delete-button {
-  opacity: 1; /* Make the button visible */
-}
-
-.edit-button {
-  right: 60px; /* Move it left of the delete button */
-  background-color: blue; /* Different background for Edit */
-}
-.edit-button:hover {
-  background-color: darkblue;
-}
-.delete-button:hover {
-  background-color: darkred;
-}
-
-@media (max-width: 576px) {
-  .delete-btn {
-      position: absolute;
-      height: 100px;
-      right: 0%;
-      width: 75px;
-      transform: translateX(-50%);
-    }
-}
-.delete-btn {
-  position: absolute;
-  right: -10%;
-  height: 100px;
-  width: 75px;
-  transform: translateX(-50%);
-}

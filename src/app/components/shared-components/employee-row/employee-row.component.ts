@@ -7,67 +7,54 @@ import { IndexeddbService } from '../../../indexDB/indexeddb.service';
 @Component({
   selector: 'app-employee-row',
   standalone: true,
-  imports: [ CommonModule,
-      FormsModule,],
+  imports: [CommonModule, FormsModule],
   templateUrl: './employee-row.component.html',
-  styleUrl: './employee-row.component.scss'
+  styleUrl: './employee-row.component.scss',
 })
 export class EmployeeRowComponent {
   startTouchX = 0;
   currentTouchX = 0;
-  @Input() employee:any;
-  isTouchDevice=signal(true)
+  @Input() employee: any;
+  isTouchDevice = signal(true);
 
-  constructor(private router: Router,private route: ActivatedRoute, private dbService:IndexeddbService){}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private dbService: IndexeddbService
+  ) {}
   ngOnInit() {
-    // Detect if the device is a touch device
-    this.isTouchDevice.set('ontouchstart' in window || navigator.maxTouchPoints > 0);
-    console.log('ontouchstart' in window || navigator.maxTouchPoints > 0);
-    
+    this.isTouchDevice.set(
+      'ontouchstart' in window || navigator.maxTouchPoints > 0
+    );
   }
 
   onTouchStart(event: TouchEvent): void {
-    this.isTouchDevice.set(true)
-    console.log(true);
-    
+    this.isTouchDevice.set(true);
     this.startTouchX = event.touches[0].clientX;
   }
 
-  istouchedtru(){
-    this.isTouchDevice.set(true)
-    console.log(true);
-    
-  }
-
-  onTouchMove(event: TouchEvent,employee:any): void {
+  onTouchMove(event: TouchEvent, employee: any): void {
     this.currentTouchX = event.touches[0].clientX;
     const deltaX = this.startTouchX - this.currentTouchX;
-    
-    if (deltaX > 50) {  // Swipe threshold
+
+    if (deltaX > 50) {
       employee.swipeLeft = true;
     } else {
       employee.swipeLeft = false;
     }
   }
-
-  onTouchEnd(employee:any): void {
-    // Reset or finalize swipe
-    if (employee.swipeLeft) {
-      // employee.swipeLeft = true;
-    }
-  }
-  onEditDetails(employee:any){
-    const {id} = employee;
+  onEditDetails(employee: any) {
+    const { id } = employee;
     this.router.navigate([`employee/${id}/edit`]);
   }
-  deleteEmployee(employee:any){
-    this.dbService.deleteEmployee(employee.id).subscribe((data)=>{
-      this.dbService.setAllEmployees(data)
-    })
+  deleteEmployee(employee: any) {
+    this.dbService.deleteEmployee(employee.id).subscribe((data) => {
+      this.dbService.setAllEmployees(data);
+    });
   }
   onMouseOver() {
-    console.log(('ontouchstart' in window || navigator.maxTouchPoints > 0));
-    
-    this.isTouchDevice.set(('ontouchstart' in window || navigator.maxTouchPoints > 0))
+    this.isTouchDevice.set(
+      'ontouchstart' in window || navigator.maxTouchPoints > 0
+    );
   }
 }
