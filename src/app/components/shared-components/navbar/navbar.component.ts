@@ -33,9 +33,11 @@ export class NavbarComponent {
   }
 
   onDeleteEmployee(): void {
-    this.dbService.deleteEmployee(this.commonservice.editEmployeeId).subscribe((data)=>{
+    this.dbService.deleteEmployee(this.commonservice?.editEmployee?.id).subscribe((data)=>{
       this.dbService.setAllEmployees(data)
       this.router.navigate(['/employees']);
+      this.commonservice.undoStack.push(this.commonservice?.editEmployee)
+      this.commonservice.showSnakBar('Employee data has been deleted')
     })
   }
 }

@@ -16,7 +16,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { Employee } from '../shared-components/models/Employee';
-import { DBConfig, NgxIndexedDBModule, provideIndexedDb } from 'ngx-indexed-db';
 import { IndexeddbService } from '../../indexDB/indexeddb.service';
 import { Observable } from 'rxjs';
 import { CommonserviceService } from '../shared-components/services/commonservice.service';
@@ -63,7 +62,7 @@ export class AddEditEmployeeComponent {
         data = data['employee'];
         this.commonService.setTitle(this.commonService.editEmployeePageTitle);
         this.employee = data;
-        this.commonService.editEmployeeId = data.id;
+        this.commonService.editEmployee = data;
         this.employeeName.set(data['name']);
         this.employeePosition.set(data['position']);
         this.fromDate.set(data['fromDate']);
@@ -167,7 +166,7 @@ export class AddEditEmployeeComponent {
     this._snackBar.open(message, 'Ok', {
       duration: 3000,
       horizontalPosition: 'center',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
       panelClass: 'multiline-snackbar',
     });
   }

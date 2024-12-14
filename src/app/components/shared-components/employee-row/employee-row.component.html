@@ -1,7 +1,8 @@
 <div class="flex-vertical">
-    <div class="swipe-content swipe-box" (mouseover)="onMouseOver()" (touchstart)="onTouchStart($event)"
-        (touchmove)="onTouchMove($event,employee)" [ngClass]="{'swiped-left': employee.swipeLeft}" cdkDrag>
-        <p class="bold-title cursor" type="button" (click)="onEditDetails(employee)">{{
+    <div class="swipe-content swipe-box" (click)="onEditDetails(employee)" (mouseover)="onMouseOver()"
+        (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event,employee)"
+        [ngClass]="{'swiped-left': employee.swipeLeft}" cdkDrag>
+        <p class="bold-title cursor" type="button">{{
             employee.name }}</p>
         <p class="position">{{ employee.position }}</p>
         <p class="dates">From {{ employee.fromDate | date:'d MMMM y'}} {{ employee.toDate==null?'':(' -
